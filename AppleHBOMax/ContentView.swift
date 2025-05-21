@@ -1,14 +1,27 @@
-//
-//  ContentView.swift
-//  AppleHBOMax
-//
-//  Created by designer on 2025-05-20.
-//
-
 import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    // State to control whether the splash screen is active
+    @State private var isSplashScreenActive = true
+
+    // Accessing the SwiftData model context (if you need it directly here,
+    // often it's used in deeper views)
+    // @Environment(\.modelContext) private var modelContext
+
+    var body: some View {
+        // Use a ZStack or if/else to switch between Splash and Main content
+        if isSplashScreenActive {
+            SplashScreenView(isActive: $isSplashScreenActive)
+        } else {
+            MainAppView() // This will be your main app UI (e.g., TabView)
+        }
+    }
+
+    // This is the default Item list example from the template,
+    // you'll likely remove or heavily modify this part.
+    // For now, we'll comment it out as we focus on navigation.
+    /*
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
 
@@ -24,15 +37,10 @@ struct ContentView: View {
                 }
                 .onDelete(perform: deleteItems)
             }
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
             .toolbar {
-#if os(iOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
-#endif
                 ToolbarItem {
                     Button(action: addItem) {
                         Label("Add Item", systemImage: "plus")
@@ -58,9 +66,14 @@ struct ContentView: View {
             }
         }
     }
+    */
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+// Preview for ContentView
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            // If your ContentView or its children need the modelContainer for previews:
+            // .modelContainer(for: Item.self, inMemory: true)
+    }
 }
